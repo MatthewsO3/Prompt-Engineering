@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filmek és jegyárak</title>
+    <link rel="stylesheet" type="text/css" href="<%= asset_path('films.css') %>">
+</head>
+<body>
+	<table>
+	<% @movies.each do |movie| %>	
+	<tr>
+			
+		<td>
+			<div class = "logo">
+			<img src="<%= asset_path(movie.png_name) %>">
+			</div>
+		</td>
+		<td>
+			<div class="film-info">
+				<h2><%= movie.title %></h2>
+				<p>16:45, 18:15, 20:15</p>
+			</div>
+		</td>
+		<% if current_user.admin%>
+		
+		<td >
+			<%= link_to 'Edit' ,edit_movie_path(movie), :method => :get %>
+		</td>
+		<td>
+			<%= button_to 'Delete' ,movie_path(movie) ,:method => :delete%>
+		</td>
+		
+		<%end%>
+
+	</tr>
+	<% end %>
+	
+	 
+  
+
+	
+	
+	
+	</table>
+    
+   
+</body>
+</html>
+

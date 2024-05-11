@@ -1,0 +1,64 @@
+
+<style>
+  /* Style the fieldset */
+  fieldset {
+    border: 5px solid #000; /* Set the border width, style, and color */
+    padding: 10px; /* Add some padding inside the fieldset */
+  }
+
+  /* Style the legend (optional) */
+  legend {
+    font-weight: bold; /* Make the legend text bold */
+  }
+
+  /* Style the form */
+  .form-label {
+    margin-bottom: 10px;
+    text-color:  /* Add some margin to the form elements */
+  }
+  #chat-response textarea {
+    background-color: #111;
+    color: #fff;
+    border: 0px;
+    font-size: 16px; /* Text size */
+    font-family: Arial, sans-serif; /* Font family */
+  }
+  #chat-response input[type="text"] {
+  width:450px;
+  height: 40px;
+    background-color: #111;
+    color: #fff;
+    border: 0px;
+    font-size: 16px; /* Text size */
+    font-family: Arial, sans-serif; /* Font family */
+  }
+  #chat-response input[type="submit"] {
+    background-color: #111;
+    color: #fff;
+    border: 0px;
+    font-size: 16px; /* Text size */
+    font-family: Arial, sans-serif; /* Font family */
+    width: 50px; /* Set the width of the button */
+    height: 40px; /* Set the height of the button */
+    /* Additional styles such as background color, text color, etc. can be added here */
+  }
+</style>
+</head>
+<body>
+ <legend>Chat with ChatGPT</legend>
+<fieldset>
+ <div id="chat-response">
+  <form action="<%= chat_gpt_index_path %>" method="get" class="form-label">
+    <input type="text" name="prompt" placeholder="Type your favourite film, or a recent film you seen here...">
+    <input type="submit" value="Send">
+  </form>
+  
+    <% if @response.present? %>
+       <textarea class="form-control" id="exampleFormControlTextarea1" rows="8"> <%= @response %></textarea>
+    <% end %>
+  </div>
+</fieldset>
+
+</body>
+</html>
+

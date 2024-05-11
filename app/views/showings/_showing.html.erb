@@ -1,0 +1,150 @@
+<p style="color: green"><%= notice %></p>
+<%= javascript_include_tag 'application' %>
+
+
+<body>
+    <div class="move-container">
+      <label>Pick the type of the ticket:</label>
+      <select id="movie"
+        ><option value="10">2D</option>
+        <option value="15">3D</option>
+        <option value="20">IMax</option>
+        <option value="35">VIP </option></select>
+    </div>
+    
+    <ul class="showcase">
+      <li>
+        <div class="seat"></div>
+        <small>Available</small>
+      </li>
+      <li>
+        <div class="seat selected"></div>
+        <small>Selected</small>
+      </li>
+      <li>
+        <div class="seat occupied"></div>
+        <small>Occupied</small>
+      </li>
+    </ul>
+
+    <div class="container">
+    
+      <div class="screen"></div>
+     <% seats_by_row = {} %>
+
+<% ('A'..'E').each do |row| %>
+  <% seats_by_row[row] = [] %>
+  <% (1..7).each do |number| %>
+    <% seat_number = "#{row}#{number}" %>
+    <% seats_by_row[row] << seat_number %>
+  <% end %>
+<% end %>
+
+<table>
+  <tbody>
+    <% seats_by_row.each do |row, seats| %>
+      <div class="row">
+        <tr>
+          <% seats.each do |seat_number| %>
+            <% if Booking.where(seat_id: Seat.where(number: seat_number, screen_id: showing.screen_id), showing_id: showing).any? %>
+              <td class="seat occupied"><%= seat_number %></td>
+            <% else %>
+              <td class="seat"><%= seat_number %></td>
+
+            <% end %>
+          <% end %>
+        </tr>
+      </div>
+    <% end %>
+  </tbody>
+</table>
+
+     
+      
+
+    <p class="text">
+      You have selected <span id="count">0</span> seats for the price of $<span
+        id="total"
+        >0</span
+      >!
+    </p>
+
+
+<button id="bookButton" class="bookButton btn btn-dark">BOOK</button>
+
+  </body>
+</html>
+
+
+
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', function() {
+    var selectedSeats = [];
+    var ticketPrice = 0;
+    var ticketType = document.getElementById('movie');
+
+    // Function to update selected seats and total price
+    function updateSelectedSeats() {
+      var seatCount = selectedSeats.length;
+      var totalPrice = seatCount * ticketPrice;
+      document.getElementById('count').textContent = seatCount;
+      document.getElementById('total').textContent = totalPrice;
+    }
+
+    // Function to handle seat click event
+    function seatClickHandler(event) {
+      var seat = event.target;
+      if (seat.classList.contains('occupied')) {
+        return;
+      }
+      seat.classList.toggle('selected');
+      var seatNumber = seat.textContent;
+      var index = selectedSeats.indexOf(seatNumber);
+      if (index !== -1) {
+        selectedSeats.splice(index, 1);
+      } else {
+        selectedSeats.push(seatNumber);
+      }
+      updateSelectedSeats();
+    }
+
+    // Attach click event listeners to seats
+    var seats = document.querySelectorAll('.seat');
+    seats.forEach(function(seat) {
+      seat.addEventListener('click', seatClickHandler);
+    });
+
+    // Event listener for ticket type change
+    ticketType.addEventListener('change', function() {
+      ticketPrice = parseInt(ticketType.value);
+      updateSelectedSeats();
+    });
+
+    // Book button click event handler
+  var bookButton = document.getElementById('bookButton');
+bookButton.addEventListener('click', function() {
+  var currentUser = "<%= current_user.id %>";
+  var showingId = "<%= @showing.id %>";
+  
+  // AJAX request
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "/bookings", true);
+  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xhr.setRequestHeader("X-CSRF-Token", document.querySelector('meta[name="csrf-token"]').content); // Hozzáadás a CSRF tokent
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+    alert("Sikeres foglalás!");
+      
+    }
+  };
+  var data = JSON.stringify({
+    currentUser: currentUser,
+    showingId: showingId,
+    selectedSeats: selectedSeats
+  });
+  xhr.send(data);
+});
+
+  });
+</script>
+

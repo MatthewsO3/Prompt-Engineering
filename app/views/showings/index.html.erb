@@ -1,0 +1,43 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Showings</h1>
+
+<div id="showings">
+<table class="table">
+<tr >
+    <th style="width: 25%;text-align: center;">Screening time</th>
+    <th style="width: 25%;text-align: center;">Screen</th>
+    <th style="width: 25%;text-align: center;">Movie</th>
+    <th style="width: 25%;text-align: center;"></th>
+  </tr>
+</table>
+  <% @showings.each do |showing| %>
+    <div id="<%= dom_id showing %>">
+  <table class="table">
+  
+  <tr>
+    
+    <td style="width: 25%;text-align: center;">
+      <%= showing.screening_time.strftime('%m-%d %H:%M') %>
+    </td>
+    
+    <td style="width: 25%;text-align: center;">
+      <%= showing.screen_id %>
+    </td>
+  
+    <td style="width: 25%;text-align: center;">
+      <% movie = Movie.find_by(id: showing.movie_id) %>
+      <%= movie.title %>
+    </td>
+    <td style="width: 25%;text-align: center;">
+    <%= link_to "Edit this showing", edit_showing_path(showing), class:"btn btn-dark" %>
+    </td>
+  </tr>
+</table>
+
+</div>
+    
+  <% end %>
+</div>
+
+

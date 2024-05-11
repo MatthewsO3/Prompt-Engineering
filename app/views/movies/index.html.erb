@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filmek és jegyárak</title>
+    <link rel="stylesheet" type="text/css" href="<%= asset_path('films.css') %>">
+</head>
+<body>
+	<table>
+	<% @movies.each do |movie| %>	
+	<tr>
+			
+		<td>
+			<div class = "logo">
+			<img src="<%= asset_path(movie.png_name) %>">
+			</div>
+		</td>
+		<td>
+			<div class="film-info">
+				<h2><%= movie.title %></h2>
+				<% showings = Showing.where(movie_id: movie.id) %>
+				<% if showings.any? %>
+				  <% showings.each do |showing| %>
+				    <%= link_to showing.screening_time.strftime('%m-%d %H:%M'), showing_path(showing.id), method: :patch %><%= '    '%>
+				  <% end %>
+				<% else %>
+				  No showings found for this movie.
+				<% end %>
+		</div>
+		</td>
+		<% if current_user.admin%>
+		
+		<td >
+			<%= button_to 'Edit' ,edit_movie_path(movie), :method => :get, class:"btn btn-dark"%>
+		</td>
+		
+		<td>
+			<%= button_to "Delete", movie_path(movie),:method =>:delete, class:"btn btn-danger"%>
+		</td>
+		
+		<%end%>
+
+	</tr>
+	<% end %>
+	
+	 
+  
+
+	
+	
+	
+	</table>
+    
+   
+</body>
+</html>
+

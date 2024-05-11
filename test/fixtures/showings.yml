@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  screening_time: 2024-04-25 12:29:39
+  screen: one
+  movie: one
+
+two:
+  screening_time: 2024-04-25 12:29:39
+  screen: two
+  movie: two

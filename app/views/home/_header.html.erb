@@ -1,0 +1,71 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <% if user_signed_in?%>
+      <li class="nav-item active">
+        <%= link_to "Profile", edit_user_registration_path, class:"nav-link"%>
+      </li>
+      <li class="nav-item active">
+        <%= link_to "Home", root_path, class:"nav-link"%>
+      </li>
+      
+      <li class="nav-item active">
+        <%= link_to "Films", movies_path, class:"nav-link"%>
+      </li>
+      
+      
+      <%  else%>
+      <li class="nav-item active">
+        <%= link_to "Sign up", new_user_registration_path, class:"nav-link"%>
+      </li>
+      <li class="nav-item active">
+        <%= link_to "Sign in", new_user_session_path, class:"nav-link"%>
+      </li>
+       <li class="nav-item active">
+        <%= link_to "Home", root_path, class:"nav-link"%>
+      </li>
+      <% end %>
+      
+      
+      
+      
+      <li class="nav-item">
+        <%= link_to "Prizes", home_pricing_path, class:"nav-link"%>
+      </li>
+      <li class="nav-item">
+        <%= link_to "Info", home_info_path, class:"nav-link"%>
+      </li>
+      
+      <% if user_signed_in?%>
+      <li class="nav-item active">
+        <%= link_to "My Reservations", bookings_path, class:"btn btn-dark"%>
+        <li class="nav-item active">
+        <%= link_to "What to watch", chat_gpt_index_path, class:"btn btn-dark"%>
+      <li class="nav-item active">
+        <%= button_to "Sign out", destroy_user_session_path, :method => :delete, class:"btn btn-dark"%>
+        
+        
+        <% if current_user.admin%>
+      <li class="nav-item active">
+       <%= link_to "New film", new_movie_path, class:"nav-link"%>
+       </li>
+       
+       <li class="nav-item">
+        <%= link_to "New Showing", new_showing_path, class:"nav-link"%>
+      </li>
+      <li class="nav-item">
+        <%= link_to "Edit Showings", showings_path, class:"nav-link"%>
+      </li>
+        <%end%>
+        <%end%>
+      </li>
+      </li>
+  
+      
+    </ul>
+  </div>
+</nav>

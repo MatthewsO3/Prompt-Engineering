@@ -1,0 +1,35 @@
+<%= form_with(model: showing) do |form| %>
+  <% if showing.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(showing.errors.count, "error") %> prohibited this showing from being saved:</h2>
+
+      <ul>
+        <% showing.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+	
+  
+  <div>
+    <%= form.label :screening_time, style: "display: block" %>
+    <%= form.datetime_field :screening_time %>
+  </div>
+
+  <div>
+    <%= form.label :screen_id, style: "display: block" %>
+<%= form.collection_select :screen_id, Screen.all, :id, :name, prompt: "Choose a screen" %>
+
+  </div>
+
+  <div>
+  <%= form.label :movie_id, style: "display: block" %>
+  <%= form.collection_select :movie_id, Movie.all, :id, :title, prompt: "Choose a movie" %>
+</div>
+<br/>
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
