@@ -19,20 +19,20 @@ Chatbot: Interact with the chatbot by visiting the film recommendations page and
 
 SETUP ON LINUX:
 sudo apt-get install build-essential
-apt-get install git
-apt-get install gcc
-apt-get install g++
-apt-get install apache2
-apt-get install ruby ruby-dev
-gem install rails
-gem install passenger
-apt-get install libmariadb-dev
-gem install sqlite3
-gem install mysql2
-gem install bundler
-apt-get install libyaml-dev
-cd project_path sudo bundle install
-passenger-install-apache2-module
+  apt-get install git
+  apt-get install gcc
+  apt-get install g++
+  apt-get install apache2
+  apt-get install ruby ruby-dev
+  gem install rails
+  gem install passenger
+  apt-get install libmariadb-dev
+  gem install sqlite3
+  gem install mysql2
+  gem install bundler
+  apt-get install libyaml-dev
+  cd project_path sudo bundle install
+  passenger-install-apache2-module
 
 Start the server:
 cd project_path rails s --> localhost:3000
@@ -61,7 +61,10 @@ Film recommender Chatbot page:
 Admin user has some extra pages for easier modifications:
 ![image](https://github.com/MatthewsO3/Prompt-Engineering/assets/143729920/bfc7179c-4bd9-4696-9ef2-86a82ebb9ac6)
 
-
+The files handling the Chatbot:
+app/controllers/chat_gpt_controller.rb - Handles the logic and the initialization
+app/views/chat_gpt/index.html.erb - Html and CSS code to display the Chat like page
+gem "ruby-openai", "~> 5.1" - Required gem for OpenAI api
 
 
 
